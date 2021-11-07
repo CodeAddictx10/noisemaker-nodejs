@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+            integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn"
+            crossorigin="anonymous"
+        />
+    </head>
+    <style>
+        .mt-8 {
+            margin-top: 30%;
+        }
+        .mt-6 {
+            margin-top: 9rem;
+        }
+        .font-1 {
+            font-size: 1rem;
+        }
+        .pointer {
+            cursor: pointer;
+        }
+    </style>
+    <body>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="container">
+                  <% if(showForm){%>
+                    <div class="col-8 mx-auto mt-5">
+                        <form method="post" action="/add"  enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label for="noisemakername"
+                                    >Enter the MF noisemaker name</label
+                                >
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="noisemakername"
+                                    name="name"
+                                />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="exampleFormControlFile1">MF picture</label>
+                                <input type="file" class="form-control-file" name="photo" id="exampleFormControlFile1">
+                            </div>
+
+                            <button
+                                type="submit"
+                                class="btn btn-primary mx-auto"
+                            >
+                                Add
+                            </button>
+                        </form>
+                    </div>
+                    <% }%>
+                    <div class="col-8 mx-auto mt-6">
+                      <div class="row justify-content-between mb-3">
+                        <h3>List of Noise Maker</h3>
+                        <span class="badge badge-warning badge-pill p-2">
+                          <% if(showForm){ %>
+                          <a href="/hide" class="text-secondary nav-link">Hide Form</a>
+                          <% } else{ %>
+                          <a href="/show"  class="text-secondary nav-link">Show Form</a>
+                          <% }%>
+                         </span >
+                         
+                      </div>
+                        <% if(list.length > 0){%>
+                        <ul class="list-group">
+                            <% list.forEach((item, index)=>{%>
+
+                            <li
+                                class="
+                                    list-group-item
+                                    d-flex
+                                    justify-content-between
+                                    align-items-center
+                                "
+                            >
+                                <span> <%= index + 1 %>. </span>
+                                <%= item.name %> <% if(item.times > 1){%>
+                                <span class="badge badge-primary badge-pill">
+                                    <%= item.times %></span
+                                >
+                                <% }%>
+                                <!-- <span> -->
+                                    <img src="<%= `http://localhost:5000/${item.pic}` %>" class="rounded" alt="" width="50px" height="50px">
+                                <!-- </span> -->
+                                <a href=<%= `/ins/${index + 1}` %>>
+                                <span
+                                    class="
+                                        badge badge-primary badge-pill
+                                        p-2
+                                        font-1
+                                        pointer
+                                    "
+                                    >+</span
+                                >
+                                </a>
+                                <a href=<%= `/red/${index + 1}` %>>
+                                <span
+                                    class="
+                                        badge badge-secondary badge-pill
+                                        p-2
+                                        font-1
+                                        pointer
+                                    "
+                                    >-</span
+                                >
+                                </a>
+                                <a href=<%= `/rem/${index + 1}` %>>
+                                    <span
+                                        class="
+                                            badge badge-danger badge-pill
+                                            p-2
+                                            font-1
+                                            pointer
+                                        "
+                                        >x</span
+                                    >
+                                </a>
+                            </li>
+                            <%}) %>
+                        </ul>
+                        <%}%> <% if(list.length == 0){%>
+                        <p class="lead">No MF has made noise</p>
+                        <% }%>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
